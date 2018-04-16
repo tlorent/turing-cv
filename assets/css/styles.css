@@ -1,0 +1,73 @@
+#index-container {
+  text-align: center;
+}
+
+p {
+  display: inline;
+}
+
+#img-tim {
+  height: 140px;
+  width: 140px;
+}
+
+#cv-intro {
+  margin-top: 150px;
+}
+
+#cv-header {
+  padding-bottom: 10px;
+  border-bottom: 3px solid #000;
+  font-family: 'Pacifico', sans-serif;
+}
+
+#about-header {
+  font-family: 'Pacifico', sans-serif;
+}
+
+#about-header:after {
+  display: block;
+  height: 2px;
+  background-color: #000;
+  content: '';
+  width: 150px;
+  margin: 0px auto;
+  margin-top: 10px;
+}
+
+#admin-intro {
+  text-align: center;
+}
+
+.card-header__headline--centered {
+  text-align: center;
+}
+
+.form__label--margin {
+  padding: 0 5px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 250px;
+}
+
+.add-input {
+  margin-bottom: 10px;
+}
+
+.extra-input-invisible {
+  display: none;
+}
+
+.extra-input-visible {
+  display: block;
+}
+
+.login-input {
+  width: 150px;
+}
+
+.login-input-label {
+  width: 100px;
+}

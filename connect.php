@@ -4,10 +4,10 @@
 //adjust the values below to match your database settings
 
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root'); //make sure the user is correct
-define('DB_PASS', 'root'); //make sure it is the right password
-define('DB_DATABASE', 'turingcv'); //we will use this database
-//connect to database host. The mysqli_connect() function opens a new connection to the MySQL server.
+define('DB_USER', '$$$'); //make sure the user is correct
+define('DB_PASS', '$$$'); //make sure it is the right password
+define('DB_DATABASE', 'turingcv2'); //we will use this database
+//connect to database host. The mysqli_connect() function opens a new connection to the MySQL server and returns an object representing the connection to the MySQL server
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_DATABASE);
 
 //make sure connection is good or die

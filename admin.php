@@ -1,12 +1,22 @@
+<?php
+
+  require_once('connect.php');
+  session_start();
+  // If a session has already been created, this function will recognise that and carry the session over to the next page (which is admin.php in this case).
+
+  if(isset($_SESSION['username']) && isset($_SESSION['password'])) {
+    $username = $_SESSION['username'];
+    $password = $_SESSION['password'];
+  } else {
+    header ("Location: index.php");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>Administration Page</title>
-    <?php require_once('connect.php');
-      session_start();
-      // If a session has already been created, this function will recognise that and carry the session over to the next page (which is admin.php in this case).
-    ?>
 
     <!-- Include Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -20,10 +30,12 @@
     <div class="container">
       <div class="row" id="admin-intro">
         <div class="col-12">
-          <h2 class="mt-5">Welcome to the admin page, <?php echo fetch_record("SELECT username FROM users WHERE userID = 1")['username']; ?> !</h2>
+          <h2 class="mt-5">Welcome to the admin page, <?php echo $_SESSION['username']; ?> !</h2>
           <br>
-          <a class="btn btn-light" href="index.php">Go back to the CV</a>
-          <br>
+          <form class="" action="logout.php" method="post">
+            <a class="btn btn-light" href="index.php">Go back to the CV</a>
+            <input type="submit" name="" value="Log Out" class="btn btn-light">
+          </form>
           <br>
           <?php
 
@@ -62,7 +74,7 @@
               <div class="card-header card-header__headline--centered" id="headingOne">
                 <h5 class="mb-0">
                   <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Change your life story here
+                    Change your details here
                   </button>
                 </h5>
               </div>

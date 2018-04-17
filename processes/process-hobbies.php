@@ -8,34 +8,45 @@
 
     $errors = array();
 
-    if(is_numeric($_POST['hobby_add'])) {
-      $errors[] = "A hobby cannot be a number.";
-    }
+    $query = "SELECT * FROM hobbies WHERE hobby = '{$_POST['hobby_add']}'";
+    $hobbyCheck = fetch_record($query);
 
-    if(empty($_POST['hobby_add'])) {
-      $errors[] = "The field for adding a hobby cannot be blank.";
-    }
-
-    if(count($errors) > 0) {
-      $_SESSION['errors'] = $errors;
-      header('Location: ../admin.php');
-    } else {
-      $_SESSION['errors'] = array();
-      $_SESSION['success'] = "Your information was valid!";
-
-      if(!empty($_POST['adding-hobby-submit'])) {
-        $query = $add_hobby;
-
-        if(run_mysql_query($query))
-        {
-            $_SESSION['message'] = "New hobby has been added correctly!";
-        }
-        else
-        {
-            $_SESSION['message'] = "Failed to add hobby..";
-        }
-
+    if($hobbyCheck) {
+      $errors[] = "This hobby already exists.";
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
         header('Location: ../admin.php');
+      }
+    } else {
+      if(is_numeric($_POST['hobby_add'])) {
+        $errors[] = "A hobby cannot be a number.";
+      }
+
+      if(empty($_POST['hobby_add'])) {
+        $errors[] = "The field for adding a hobby cannot be blank.";
+      }
+
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
+        header('Location: ../admin.php');
+      } else {
+        $_SESSION['errors'] = array();
+        $_SESSION['success'] = "Your information was valid!";
+
+        if(!empty($_POST['adding-hobby-submit'])) {
+          $query = $add_hobby;
+
+          if(run_mysql_query($query))
+          {
+              $_SESSION['message'] = "New hobby has been added correctly!";
+          }
+          else
+          {
+              $_SESSION['message'] = "Failed to add hobby..";
+          }
+
+          header('Location: ../admin.php');
+        }
       }
     }
   }

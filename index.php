@@ -15,6 +15,7 @@
       if(!empty($_POST['show-code-submit'])) {
         $profile = "show-code-profile";
       }
+
     ?>
 
     <!-- Include Bootstrap -->
@@ -31,7 +32,7 @@
       <div class="row" id="cv-intro">
         <div class="col-4">
           <img src="<?php echo fetch_record($show_user_image)['filepath_photo']; ?>" class="img-fluid rounded-circle animated fadeInLeft" alt="Photo of Tim" id="img-tim">
-          <h2 class="mt-5" id="about-header">Hi, I'm <?php echo fetch_record($show_name_header)['username']; ?></h2>
+          <h2 class="mt-5" id="about-header">Hi, I'm <?php echo $_SESSION['username']; ?></h2>
           <p>
             <?php
               if($profile == "show-ux-profile") {
@@ -45,10 +46,13 @@
           <br><br>
 
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-light" data-toggle="modal" data-target="#loginModal">Log In</button>
+          <form class="" action="login-check.php" method="post">
+            <input type="submit" class="btn btn-light" value="Change CV">
+          </form>
+          <!-- <button type="submit" class="btn btn-light" data-toggle="modal" data-target="#loginModal" formaction='login.php'>Change CV</button> -->
 
-          <!-- Modal -->
-          <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+          <!-- Modal login -->
+          <!-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -64,12 +68,6 @@
                     <div class="form-group row justify-content-center">
                       <div class="col">
                         <br>
-                        Log in as
-                        <select class="" name="user_id">
-                          <?php foreach(fetch_all($show_usernames) as $user): ?>
-                          <option value=<?php echo $user['userID']; ?>><?php echo $user['username']; ?></option>
-                          <?php endforeach; ?>
-                        </select>
                         <br><br>
                         <label for="username" class="font-weight-bold login-input-label">Username</label>
                         <input type="text" name="username" value="" class="login-input">
@@ -79,7 +77,47 @@
                         <br><br>
                         <input type="submit" name="" class="btn btn-light" value="Log In">
                         <br><br>
-                        <?php echo $_SESSION['login-message']; ?>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- End of modal -->
+
+          <!-- Button trigger modal -->
+          <br>
+          <button type="button" class="btn btn-light" data-toggle="modal" data-target="#registerModal">Register</button>
+
+          <!-- Modal login -->
+          <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="registerModalLabel">Log in</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Register there to start creating your CV.
+                  <br>
+                  <form action="register.php" method="post">
+                    <div class="form-group row justify-content-center">
+                      <div class="col">
+                        <br>
+                        Register
+                        <br><br>
+                        <label for="username" class="font-weight-bold register-input-label">Username</label>
+                        <input type="text" name="username" value="" class="register-input">
+                        <br>
+                        <label for="password" class="font-weight-bold register-input-label">Password</label>
+                        <input type="password" name="password" value="" class="register-input">
+                        <br><br>
+                        <input type="submit" name="" class="btn btn-light" value="Register">
+                        <br><br>
+                        <?php echo $_SESSION['register-message']; ?>
                       </div>
                     </div>
                   </form>
@@ -87,8 +125,8 @@
               </div>
             </div>
           </div>
+          <!-- End of modal -->
         </div>
-        <!-- End of modal -->
 
         <div class="col-8">
           <h2 class="mt-5 text-left animated fadeInDown" id="cv-header">Curriculum Vitae</h2>
@@ -118,7 +156,7 @@
                       </li>
                   </ul>
                 </div>
-                <div class="tab-pane fade active" id="list-home-projects" role="tabpanel" aria-labelledby="list-story-list">
+                <div class="tab-pane fade" id="list-home-projects" role="tabpanel" aria-labelledby="list-story-list">
                   <ul class="list-group list-group-flush">
                     <div class="card mb-3">
                       <img class="card-img-top" src="<?php if($profile == "show-code-profile") { echo fetch_record("SELECT project_photo FROM projects WHERE ID = 1")['project_photo'];} ?>" alt="">

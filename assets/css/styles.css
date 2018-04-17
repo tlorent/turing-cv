@@ -64,10 +64,12 @@ p {
   display: block;
 }
 
-.login-input {
+.login-input,
+.register-input {
   width: 150px;
 }
 
-.login-input-label {
+.login-input-label,
+.register-input-label {
   width: 100px;
 }

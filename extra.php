@@ -186,3 +186,7 @@ $query = "INSERT INTO diplomas (diploma) VALUES ('{$_POST['diploma_add']}')";
     <br>
   </div>
 </form>
+
+<?php foreach(fetch_all($show_usernames) as $user): ?>
+<option value=<?php echo $user['userID']; ?>><?php echo $user['username']; ?></option>
+<?php endforeach; ?>

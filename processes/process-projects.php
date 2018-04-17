@@ -9,16 +9,27 @@
 
     // $result_adding_project = mysqli_query($connection, $query_add_project);
 
-    if(run_mysql_query($query))
-    {
-        $_SESSION['message'] = "New project has been added correctly!";
-    }
-    else
-    {
-        $_SESSION['message'] = "Failed to add project..";
-    }
+    $query = "SELECT * FROM projects WHERE project_name = '{$_POST['project_add_name']}'";
+    $projectCheck = fetch_record($query);
 
-    header('Location: ../admin.php');
+    if($projectCheck) {
+      $errors[] = "This project already exists.";
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
+        header('Location: ../admin.php');
+      }
+    } else {
+        if(run_mysql_query($query))
+        {
+            $_SESSION['message'] = "New project has been added correctly!";
+        }
+        else
+        {
+            $_SESSION['message'] = "Failed to add project..";
+        }
+
+        header('Location: ../admin.php');
+    }
   }
 
   if(!empty($_POST['deleting-project-submit'])) {

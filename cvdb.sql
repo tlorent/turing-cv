@@ -86,10 +86,6 @@ CREATE TABLE skills (
   PRIMARY KEY (id)
 );
 
--- Add the values into the users table
-INSERT INTO users (username, password, filepath_photo)
-VALUES ('Tim', '$$$', 'assets/img/tim-min-mobile.jpg');
-
 -- Add the values into the stories table
 
 INSERT INTO stories (story_content)

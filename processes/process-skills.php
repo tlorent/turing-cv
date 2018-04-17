@@ -8,31 +8,42 @@
   if(isset($_POST['action']) && $_POST['action'] == 'add-skill') {
     $errors = array();
 
-    if(empty($_POST['skill_add'])) {
-      $errors[] = "The field for adding a skill cannot be blank.";
-    }
+    $query = "SELECT * FROM skills WHERE skill = '{$_POST['skill_add']}'";
+    $skillCheck = fetch_record($query);
 
-    if(count($errors) > 0) {
-      $_SESSION['errors'] = $errors;
-      header('Location: ../admin.php');
-    } else {
-      $_SESSION['errors'] = array();
-      $_SESSION['success'] = "Your information was valid!";
-
-      if(!empty($_POST['adding-skill-submit'])) {
-
-        $query = $add_skill;
-
-        if(run_mysql_query($query))
-        {
-            $_SESSION['message'] = "New skill(s) has/have been added correctly!";
-        }
-        else
-        {
-            $_SESSION['message'] = "Failed to add new skill(s)..";
-        }
-
+    if($skillCheck) {
+      $errors[] = "You already have this skill.";
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
         header('Location: ../admin.php');
+      }
+    } else {
+      if(empty($_POST['skill_add'])) {
+        $errors[] = "The field for adding a skill cannot be blank.";
+      }
+
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
+        header('Location: ../admin.php');
+      } else {
+        $_SESSION['errors'] = array();
+        $_SESSION['success'] = "Your information was valid!";
+
+        if(!empty($_POST['adding-skill-submit'])) {
+
+          $query = $add_skill;
+
+          if(run_mysql_query($query))
+          {
+              $_SESSION['message'] = "New skill(s) has/have been added correctly!";
+          }
+          else
+          {
+              $_SESSION['message'] = "Failed to add new skill(s)..";
+          }
+
+          header('Location: ../admin.php');
+        }
       }
     }
   }

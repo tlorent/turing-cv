@@ -7,29 +7,40 @@
   if(isset($_POST['action']) && $_POST['action'] == 'add-diploma') {
     $errors = array();
 
-    if(empty($_POST['diploma_add'])) {
-      $errors[] = "The field for adding a diploma cannot be blank.";
-    }
+    $query = "SELECT * FROM diplomas WHERE diploma = '{$_POST['diploma_add']}'";
+    $diplomaCheck = fetch_record($query);
 
-    if(count($errors) > 0) {
-      $_SESSION['errors'] = $errors;
-      header('Location: ../admin.php');
-    } else {
-      $_SESSION['errors'] = array();
-      $_SESSION['success'] = "Your information was valid!";
-
-      if(!empty($_POST['adding-diploma-submit'])) {
-
-        $query = $add_diploma;
-
-        if(run_mysql_query($query)) {
-          $_SESSION['message'] = "New diploma has been added correctly!";
-        }
-        else {
-          $_SESSION['message'] = "Failed to add diploma";
-        }
-
+    if($diplomaCheck) {
+      $errors[] = "You already have this diploma.";
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
         header('Location: ../admin.php');
+      }
+    } else {
+      if(empty($_POST['diploma_add'])) {
+        $errors[] = "The field for adding a diploma cannot be blank.";
+      }
+
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
+        header('Location: ../admin.php');
+      } else {
+        $_SESSION['errors'] = array();
+        $_SESSION['success'] = "Your information was valid!";
+
+        if(!empty($_POST['adding-diploma-submit'])) {
+
+          $query = $add_diploma;
+
+          if(run_mysql_query($query)) {
+            $_SESSION['message'] = "New diploma has been added correctly!";
+          }
+          else {
+            $_SESSION['message'] = "Failed to add diploma";
+          }
+
+          header('Location: ../admin.php');
+        }
       }
     }
   }

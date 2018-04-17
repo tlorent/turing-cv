@@ -7,34 +7,45 @@
   if(isset($_POST['action']) && $_POST['action'] == 'add-country') {
     $errors = array();
 
-    if(is_numeric($_POST['country_add'])) {
-      $errors[] = "A country cannot be a number.";
-    }
+    $query = "SELECT * FROM travels WHERE country = '{$_POST['country_add']}'";
+    $countryCheck = fetch_record($query);
 
-    if(empty($_POST['country_add'])) {
-      $errors[] = "The field for adding a country cannot be blank.";
-    }
-
-    if(count($errors) > 0) {
-      $_SESSION['errors'] = $errors;
-      header('Location: ../admin.php');
-    } else {
-      $_SESSION['errors'] = array();
-      $_SESSION['success'] = "Your information was valid!";
-
-      if(!empty($_POST['adding-travel-submit'])) {
-        $query = $add_country;
-
-        if(run_mysql_query($query))
-        {
-            $_SESSION['message'] = "New travel destination(s) has been added correctly!";
-        }
-        else
-        {
-            $_SESSION['message'] = "Failed to add travel destination(s)..";
-        }
-
+    if($countryCheck) {
+      $errors[] = "This country already exists.";
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
         header('Location: ../admin.php');
+      }
+    } else {
+      if(is_numeric($_POST['country_add'])) {
+        $errors[] = "A country cannot be a number.";
+      }
+
+      if(empty($_POST['country_add'])) {
+        $errors[] = "The field for adding a country cannot be blank.";
+      }
+
+      if(count($errors) > 0) {
+        $_SESSION['errors'] = $errors;
+        header('Location: ../admin.php');
+      } else {
+        $_SESSION['errors'] = array();
+        $_SESSION['success'] = "Your information was valid!";
+
+        if(!empty($_POST['adding-travel-submit'])) {
+          $query = $add_country;
+
+          if(run_mysql_query($query))
+          {
+              $_SESSION['message'] = "New travel destination(s) has been added correctly!";
+          }
+          else
+          {
+              $_SESSION['message'] = "Failed to add travel destination(s)..";
+          }
+
+          header('Location: ../admin.php');
+        }
       }
     }
   }
